@@ -1,5 +1,9 @@
 package com.cognizant.healthcare.repository;
 
-public interface AvailabilityRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.cognizant.healthcare.entity.Availability;
+
+public interface AvailabilityRepository extends JpaRepository<Availability, Long> {
 
 }
