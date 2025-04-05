@@ -9,6 +9,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
+import lombok.Data;
+@Data
+
 @Entity
 public class Appointment {
     @Id
