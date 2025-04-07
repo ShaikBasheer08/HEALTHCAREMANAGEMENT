@@ -1,0 +1,7 @@
+package com.cognizant.healthcare.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface PatientRepository extends JpaRepository<Integer, Id> {
+
+}

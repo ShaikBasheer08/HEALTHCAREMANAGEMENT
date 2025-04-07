@@ -1,0 +1,5 @@
+package com.cognizant.healthcare.DTO;
+
+public class DoctorDTO {
+
+}

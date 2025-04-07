@@ -1,0 +1,93 @@
+package com.cognizant.healthcare.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.cognizant.healthcare.entity.Appointment;
+import com.cognizant.healthcare.entity.Doctor;
+import com.cognizant.healthcare.entity.Patient;
+import com.cognizant.healthcare.repository.AppointmentRepository;
+import com.cognizant.healthcare.repository.ConsultationRepository;
+import com.cognizant.healthcare.repository.DoctorRepository;
+import com.cognizant.healthcare.repository.PatientRepository;
+
+@Service
+public class PatientService {
+
+    @Autowired
+    private PatientRepository patientRepository;
+
+    @Autowired
+    private AppointmentRepository appointmentRepository;
+
+    @Autowired
+    private ConsultationRepository consultationRepository;
+
+    @Autowired
+    private DoctorRepository doctorRepository;
+
+    // Create a new patient
+    public Patient createPatient(Patient patient) {
+        return patientRepository.save(patient);
+    }
+
+    // Get a patient by ID (Optional return type)
+    public Optional<Patient> getPatientById(Long patientId) {
+        return patientRepository.findById(patientId);
+    }
+
+    // Update patient details (Optional return type)
+    public Optional<Patient> updatePatient(Long patientId, Patient updatedPatient) {
+        return patientRepository.findById(patientId).map(existingPatient -> {
+            existingPatient.setAge(updatedPatient.getAge());
+            existingPatient.setGender(updatedPatient.getGender());
+            existingPatient.setCurrentMedications(updatedPatient.getCurrentMedications());
+            existingPatient.setMedicalHistory(updatedPatient.getMedicalHistory());
+            return patientRepository.save(existingPatient);
+        });
+    }
+
+    // Delete a patient by ID
+    public void deletePatient(Long patientId) {
+        patientRepository.deleteById(patientId);
+    }
+
+    // Book an appointment
+    public Appointment bookAppointment(Long patientId, Long doctorId, String timeslot) {
+        Patient patient = getPatientById(patientId)
+                .orElseThrow(() -> new RuntimeException("Patient not found"));
+        Doctor doctor = doctorRepository.findById(doctorId)
+                .orElseThrow(() -> new RuntimeException("Doctor not found"));
+
+        // Validate doctor's availability
+        boolean isAvailable = doctor.getAvailabilityList().stream()
+                .anyMatch(availability -> availability.getTimeslot().equals(timeslot));
+        if (!isAvailable) {
+            throw new RuntimeException("Doctor is not available at the requested time slot");
+        }
+
+        // Validate patient conflicts
+        boolean hasConflict = appointmentRepository.findByPatientId(patientId).stream()
+                .anyMatch(appointment -> appointment.getTimeslot().equals(timeslot));
+        if (hasConflict) {
+            throw new RuntimeException("Patient already has an appointment at this time slot");
+        }
+
+        // Create and save appointment
+        Appointment appointment = new Appointment();
+        appointment.setPatient(patient);
+        appointment.setDoctor(doctor);
+        appointment.setTimeslot(timeslot);
+        appointment.setStatus("Booked");
+        return appointmentRepository.save(appointment);
+    }
+
+    // View consultation history for a patient
+    public List<Consultation> getConsultationHistory(Long patientId) {
+        return consultationRepository.findByPatientId(patientId);
+    }
+}
+

@@ -1,0 +1,24 @@
+package com.cognizant.healthcare.DTO;
+
+
+public class ConsultationDTO {
+    private Long consultationID;
+    private AppointmentDTO appointment;
+    private String notes; // Consultation notes
+    private String prescription; // Prescribed medications
+	public Long getConsultationID() {
+		return consultationID;
+	}
+	public void setConsultationID(Long consultationID) {
+		this.consultationID = consultationID;
+	}
+	public AppointmentDTO getAppointment() {
+		return appointment;
+	}
+	public void setAppointment(AppointmentDTO appointment) {
+		this.appointment = appointment;
+	}
+
+    // Getters and setters
+}
+

@@ -1,0 +1,33 @@
+package com.cognizant.healthcare.entity;
+
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+
+
+
+@Entity
+
+public class Patient {
+	@Id
+	private Long patientId;
+    @OneToOne (cascade = CascadeType.ALL)
+    @MapsId
+    @JoinColumn(name ="patientId")
+    private User user;
+
+
+    private int age;
+    private String gender;
+    private String currentMedications;
+    private String medicalHistory;
+
+    @OneToMany(mappedBy = "patient")
+    private List<Appointment> patientAppointments;
+}

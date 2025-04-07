@@ -1,0 +1,20 @@
+package com.cognizant.healthcare.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.cognizant.healthcare.entity.Appointment;
+import com.cognizant.healthcare.entity.Patient;
+
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
+
+	// Correct method for querying by Patient ID
+    List<Appointment> findByPatient_PatientID(Long patientId);
+
+	Optional<Patient> findByPatientId(Long patientId);
+}
