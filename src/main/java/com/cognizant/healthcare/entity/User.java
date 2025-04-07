@@ -4,7 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
+import jakarta.persistence.OneToOne;
 import lombok.Data;
 @Data
 
@@ -20,4 +20,10 @@ public class User {
     private String email;
     private String phone;
     private String password;
+
+    @OneToOne(mappedBy = "user") // Bi-directional mapping
+    private Doctor doctor;
+
+    @OneToOne(mappedBy = "user") // Bi-directional mapping
+    private Patient patient;
 }
