@@ -1,5 +1,6 @@
 package com.cognizant.healthcare.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,6 +24,8 @@ import com.cognizant.healthcare.repository.DoctorRepository;
 import com.cognizant.healthcare.repository.PatientRepository;
 import com.cognizant.healthcare.repository.UserRepository;
 
+
+
 @Service
 public class PatientService {
 
@@ -45,6 +48,7 @@ public class PatientService {
     private ModelMapper modelMapper; // ModelMapper instance for mapping entities and DTOs
 
     // Create a new patient
+
     public PatientDTO createPatient(PatientDTO patientDTO) {
         // Map UserDTO to User entity
         User user = modelMapper.map(patientDTO.getUser(), User.class);
@@ -60,12 +64,14 @@ public class PatientService {
     }
 
     // Get a patient by ID (returns Optional)
+
     public Optional<PatientDTO> getPatientById(Long patientID) {
         return patientRepository.findByPatientID(patientID)
                 .map(patient -> modelMapper.map(patient, PatientDTO.class));
     }
 
     // Update patient details (uses Optional)
+
     public Optional<PatientDTO> updatePatient(Long patientId, PatientDTO updatedPatientDTO) {
         return patientRepository.findById(patientId).map(existingPatient -> {
             modelMapper.map(updatedPatientDTO, existingPatient); // Map updated fields
@@ -75,12 +81,13 @@ public class PatientService {
     }
 
     // Delete a patient by ID
+  
     public void deletePatient(Long patientId) {
         patientRepository.deleteById(patientId);
     }
 
     // Book an appointment
-    public AppointmentDTO bookAppointment(Long patientId, Long doctorId, String timeslot) {
+    public AppointmentDTO bookAppointment(Long patientId, Long doctorId, LocalDate date, String timeslot) {
         Patient patient = patientRepository.findById(patientId)
                 .orElseThrow(() -> new RuntimeException("Patient not found"));
         Doctor doctor = doctorRepository.findById(doctorId)
@@ -104,6 +111,7 @@ public class PatientService {
         Appointment appointment = new Appointment();
         appointment.setPatient(patient);
         appointment.setDoctor(doctor);
+        appointment.setDate(date);
         appointment.setTimeslot(timeslot);
         appointment.setStatus("Booked");
         Appointment savedAppointment = appointmentRepository.save(appointment);

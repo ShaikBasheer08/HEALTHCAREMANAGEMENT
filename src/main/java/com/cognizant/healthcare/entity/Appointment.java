@@ -1,5 +1,7 @@
 package com.cognizant.healthcare.entity;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Entity;
 
 import jakarta.persistence.GeneratedValue;
@@ -25,7 +27,7 @@ public class Appointment {
     @ManyToOne
     @JoinColumn(name = "doctorID")
     private Doctor doctor;
-
+    private LocalDate date; 
     private String timeslot;
     private String status;
 

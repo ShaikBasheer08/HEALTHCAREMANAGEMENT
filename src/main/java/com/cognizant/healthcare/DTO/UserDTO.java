@@ -9,7 +9,7 @@ public class UserDTO {
     private String role; // "Doctor" or "Patient"
     private String email;
     private String phone;
-    private String Password;
+    private String password;
 
     // Getters and setters
 }

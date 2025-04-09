@@ -1,9 +1,11 @@
 package com.cognizant.healthcare.DTO;
 
+import java.time.LocalDateTime;
 
 public class ConsultationDTO {
     private Long consultationID;
     private AppointmentDTO appointment;
+    private LocalDateTime consultationDate;
     private String notes; // Consultation notes
     private String prescription; // Prescribed medications
 	public Long getConsultationID() {
@@ -29,6 +31,12 @@ public class ConsultationDTO {
 	}
 	public void setPrescription(String prescription) {
 		this.prescription = prescription;
+	}
+	public LocalDateTime getConsultationDate() {
+		return consultationDate;
+	}
+	public void setConsultationDate(LocalDateTime consultationDate) {
+		this.consultationDate = consultationDate;
 	}
 
     // Getters and setters

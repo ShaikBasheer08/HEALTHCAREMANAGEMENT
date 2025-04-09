@@ -1,6 +1,10 @@
 package com.cognizant.healthcare.entity;
 
+import com.cognizant.healthcare.constants.DayOfWeek;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,7 +21,8 @@ public class Availability {
     private Long availabilityID;
 
     private String timeslot;
-    private String availableDay;
+    @Enumerated(EnumType.STRING) // Use EnumType.STRING to store enum values as strings in the database
+    private DayOfWeek availableDay; 
 
     @ManyToOne
     @JoinColumn(name = "doctorID")

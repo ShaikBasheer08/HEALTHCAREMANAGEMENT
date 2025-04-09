@@ -1,6 +1,8 @@
 package com.cognizant.healthcare.entity;
 
 import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,7 +20,7 @@ public class Patient {
 	private Long patientID;
 
 	@MapsId
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "patient_id")
 	
 	private User user;
