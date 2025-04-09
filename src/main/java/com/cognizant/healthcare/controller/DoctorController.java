@@ -18,6 +18,75 @@ public class DoctorController {
 
     @Autowired
     private DoctorService doctorService;
+    
+        // Create a new doctor
+        @PostMapping
+        public ResponseEntity<DoctorDTO> createDoctor(@RequestBody DoctorDTO doctorDTO) {
+            try {
+                DoctorDTO createdDoctor = doctorService.createDoctor(doctorDTO);
+                return ResponseEntity.status(HttpStatus.CREATED).body(createdDoctor);
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            }
+        }
+
+        // Get a doctor by ID
+        @GetMapping("/{doctorID}")
+        public ResponseEntity<DoctorDTO> getDoctorById(@PathVariable Long doctorID) {
+            Optional<DoctorDTO> doctorDTO = doctorService.getDoctorById(doctorID);
+            return doctorDTO.map(ResponseEntity::ok)
+                    .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
+        }
+
+        // Update doctor details
+        @PutMapping("/{doctorID}")
+        public ResponseEntity<DoctorDTO> updateDoctor(@PathVariable Long doctorID,
+                                                      @RequestBody DoctorDTO updatedDoctorDTO) {
+            Optional<DoctorDTO> updatedDoctor = doctorService.updateDoctor(doctorID, updatedDoctorDTO);
+            return updatedDoctor.map(ResponseEntity::ok)
+                    .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
+        }
+
+        // Delete a doctor
+        @DeleteMapping("/{doctorID}")
+        public ResponseEntity<String> deleteDoctor(@PathVariable Long doctorID) {
+            try {
+                doctorService.deleteDoctor(doctorID);
+                return ResponseEntity.ok("Doctor deleted successfully.");
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body("An error occurred while deleting the doctor.");
+            }
+        }
+
+        // Create availability for a doctor
+        @PostMapping("/{doctorID}/availability")
+        public ResponseEntity<AvailabilityDTO> createDoctorAvailability(@PathVariable Long doctorID,
+                                                                        @RequestBody AvailabilityDTO availabilityDTO) {
+            try {
+                AvailabilityDTO createdAvailability = doctorService.createDoctorAvailability(doctorID, availabilityDTO);
+                return ResponseEntity.status(HttpStatus.CREATED).body(createdAvailability);
+            } catch (RuntimeException e) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            }
+        }
+
+        // Get availability for a doctor
+        @GetMapping("/{doctorID}/availability")
+        public ResponseEntity<List<AvailabilityDTO>> getDoctorAvailability(@PathVariable Long doctorID) {
+            try {
+                List<AvailabilityDTO> availabilityList = doctorService.getDoctorAvailability(doctorID);
+                return ResponseEntity.ok(availabilityList);
+            } catch (RuntimeException e) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            }
+        }
+    
+
 
     // **Consultation Management**
 
