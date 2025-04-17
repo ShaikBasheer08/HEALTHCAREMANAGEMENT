@@ -1,17 +1,34 @@
 package com.cognizant.healthcare.DTO;
-
+ 
+ 
 import java.time.LocalDate;
-
+ 
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotNull;
+ 
+import jakarta.validation.constraints.Size;
 import lombok.Data;
-
+ 
 @Data
 public class AppointmentDTO {
     private Long appointmentID;
+ 
+    @NotNull(message = "Patient details must not be null")
     private PatientDTO patient;
+ 
+   @NotNull(message = "Doctor details must not be null")
     private DoctorDTO doctor;
+ 
+  @NotNull(message = "Date must not be null")
+  @Future(message = "Appointment date must be in the future")
     private LocalDate date;
-    private String timeslot; // e.g., "10:00 AM - 11:00 AM"
-    private String status; // e.g., "Booked", "Cancelled", "Completed"
-
-    // Getters and setters
+ 
+    @NotNull(message = "Timeslot must not be null")
+    private String timeslot;
+ 
+  @NotNull(message = "Status must not be null")
+    @Size(min = 1, max = 20, message = "Status must be between 1 and 20 characters long")
+    private String status;
 }
+ 
+ 

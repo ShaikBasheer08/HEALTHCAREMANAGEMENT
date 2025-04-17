@@ -11,8 +11,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
-import lombok.Data;
-@Data
 
 @Entity
 public class Availability {
@@ -21,7 +19,39 @@ public class Availability {
     private Long availabilityID;
 
     private String timeslot;
-    @Enumerated(EnumType.STRING) // Use EnumType.STRING to store enum values as strings in the database
+    public Long getAvailabilityID() {
+		return availabilityID;
+	}
+
+	public void setAvailabilityID(Long availabilityID) {
+		this.availabilityID = availabilityID;
+	}
+
+	public String getTimeslot() {
+		return timeslot;
+	}
+
+	public void setTimeslot(String timeslot) {
+		this.timeslot = timeslot;
+	}
+
+	public DayOfWeek getAvailableDay() {
+		return availableDay;
+	}
+
+	public void setAvailableDay(DayOfWeek availableDay) {
+		this.availableDay = availableDay;
+	}
+
+	public Doctor getDoctor() {
+		return doctor;
+	}
+
+	public void setDoctor(Doctor doctor) {
+		this.doctor = doctor;
+	}
+
+	@Enumerated(EnumType.STRING) // Use EnumType.STRING to store enum values as strings in the database
     private DayOfWeek availableDay; 
 
     @ManyToOne
