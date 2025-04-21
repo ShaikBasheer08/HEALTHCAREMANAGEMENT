@@ -1,8 +1,8 @@
 package com.cognizant.healthcare.exception;
 
-public class ResourceNotFoundException extends RuntimeException {
+public class DuplicateRecordException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
-    public ResourceNotFoundException(String message) {
+    public DuplicateRecordException(String message) {
         super(message);
     }
 }

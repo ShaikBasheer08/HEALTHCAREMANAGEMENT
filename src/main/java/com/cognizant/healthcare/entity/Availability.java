@@ -19,7 +19,8 @@ public class Availability {
     private Long availabilityID;
 
     private String timeslot;
-    public Long getAvailabilityID() {
+   
+	public Long getAvailabilityID() {
 		return availabilityID;
 	}
 

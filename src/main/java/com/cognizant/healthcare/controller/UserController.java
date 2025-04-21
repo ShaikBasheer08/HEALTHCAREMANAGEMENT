@@ -23,26 +23,28 @@ import com.cognizant.healthcare.DTO.AuthenticationRequestDTO;
 import com.cognizant.healthcare.DTO.AuthenticationResponseDTO;
 import com.cognizant.healthcare.DTO.RegistrationRequestDTO;
 import com.cognizant.healthcare.entity.User;
-import com.cognizant.healthcare.service.AuthenticationService;
-import com.cognizant.healthcare.service.MyUserDetailsService;
+import com.cognizant.healthcare.service.UserService;
+import com.cognizant.healthcare.security.MyUserDetailsService;
 import com.cognizant.healthcare.util.JwtUtil;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/auth")
-public class AuthenticationController {
+public class UserController {
  
     @Autowired
-    private AuthenticationService authenticationService;
+    private UserService authenticationService;
  
     // Save user endpoint (registration)
     @PostMapping("/saveUser")
-    public User register(@RequestBody RegistrationRequestDTO request) {
+    public User register(@Valid @RequestBody RegistrationRequestDTO request) {
         return authenticationService.saveUser(request); // Delegate to service
     }
  
     // Login endpoint
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthenticationRequestDTO request) {
+    public ResponseEntity<?> login(@Valid @RequestBody AuthenticationRequestDTO request) {
         try {
             String response = authenticationService.authenticateUser(request);
             return ResponseEntity.ok(response);

@@ -1,8 +1,10 @@
 package com.cognizant.healthcare.controller;
 import java.time.LocalDate;
  
+ 
 import java.util.List;
  
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +20,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
  
 import com.cognizant.healthcare.DTO.AppointmentDTO;
+import com.cognizant.healthcare.DTO.AppointmentResponseDTO;
 import com.cognizant.healthcare.DTO.ConsultationDTO;
+import com.cognizant.healthcare.DTO.ConsultationDetailsDTO;
+//import com.cognizant.healthcare.DTO.ConsultationDetailsDTO;
 import com.cognizant.healthcare.DTO.PatientDTO;
+//import com.cognizant.healthcare.entity.Consultation;
+//import com.cognizant.healthcare.exception.ResourceNotFoundException;
+import com.cognizant.healthcare.repository.ConsultationRepository;
 import com.cognizant.healthcare.service.PatientService;
  
 import jakarta.validation.Valid;
@@ -33,7 +41,7 @@ public class PatientController {
  
     @Autowired
     private PatientService patientService;
- 
+   
 // Create a new patient
  
     @PostMapping("/add")
@@ -54,7 +62,7 @@ public class PatientController {
  
     @PreAuthorize("hasRole('PATIENT')")
  
-    public ResponseEntity<PatientDTO> getPatientByID(@PathVariable Long id) {
+    public ResponseEntity<PatientDTO> getPatientByID(@Valid @PathVariable Long id) {
  
         return patientService.getPatientByID(id)
  
@@ -118,27 +126,31 @@ public class PatientController {
 // Retrieve appointments by patient ID
     @GetMapping("/{patientID}/appointments")
     @PreAuthorize("hasRole('PATIENT')")
-    public ResponseEntity<List<AppointmentDTO>> getAppointmentsByPatientID(@PathVariable Long patientID) {
-        List<AppointmentDTO> appointments = patientService.getAppointmentsByPatientID(patientID);
-        return ResponseEntity.ok(appointments);
+    public ResponseEntity<List<AppointmentResponseDTO>> getAppointmentsByPatientID(@PathVariable Long patientID) {
+        List<AppointmentResponseDTO> appointmentResponseDTOs = patientService.getAppointmentsByPatientID(patientID);
+        return ResponseEntity.ok(appointmentResponseDTOs);
     }
  
     // View consultation history
- 
-    @GetMapping("/{patientID}/consultations")
- 
-@PreAuthorize("hasRole('PATIENT')")
- 
+    @GetMapping("/{patientID}/consultations/history")
+    @PreAuthorize("hasRole('PATIENT')")
     public ResponseEntity<List<ConsultationDTO>> getConsultationHistory(@PathVariable Long patientID) {
- 
-        List<ConsultationDTO> consultations = patientService.getConsultationHistory(patientID);
- 
-        return ResponseEntity.ok(consultations);
- 
+        List<ConsultationDTO> consultationHistory = patientService.getConsultationHistory(patientID);
+        return ResponseEntity.ok(consultationHistory);
     }
+
+   
+ 
+ 
+ 
     
- 
- 
+    @GetMapping("/{patientID}/consultations/{consultationID}/details")
+    public ResponseEntity<ConsultationDetailsDTO> getConsultationDetails(@PathVariable Long consultationID) {
+        ConsultationDetailsDTO consultationDetailsDTO = patientService.getConsultationDetails(consultationID);
+        return ResponseEntity.ok(consultationDetailsDTO);
+    }
+
+
 }
  
  

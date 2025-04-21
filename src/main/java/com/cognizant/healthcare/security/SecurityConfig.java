@@ -1,4 +1,4 @@
-package com.cognizant.healthcare;
+package com.cognizant.healthcare.security;
  
 import org.springframework.beans.factory.annotation.Autowired;
  

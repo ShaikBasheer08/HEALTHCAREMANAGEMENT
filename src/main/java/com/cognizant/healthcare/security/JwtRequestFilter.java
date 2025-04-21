@@ -1,4 +1,4 @@
-package com.cognizant.healthcare;
+package com.cognizant.healthcare.security;
  
 import java.io.IOException;
  
