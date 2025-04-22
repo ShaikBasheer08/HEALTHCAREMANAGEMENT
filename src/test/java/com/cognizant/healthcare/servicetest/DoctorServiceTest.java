@@ -201,7 +201,7 @@ class DoctorServiceTest {
         when(consultationRepository.findByAppointment_AppointmentID(1L)).thenReturn(Optional.of(consultation));
 
         assertThrows(DuplicateRecordException.class, () -> doctorService.createConsultation(1L, consultationDTO));
-    }
+         }
 
     // **Test Deleting Consultation**
     @Test

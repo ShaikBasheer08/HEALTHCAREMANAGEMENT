@@ -1,0 +1,12 @@
+package com.cognizant.healthcare.entity;
+
+import jakarta.persistence.Entity;
+import lombok.Data;
+
+@Entity
+@Data
+public class Patient {
+	@Id
+	private int id;
+
+}

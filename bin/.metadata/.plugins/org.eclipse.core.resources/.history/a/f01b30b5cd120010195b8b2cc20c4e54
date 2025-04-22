@@ -1,0 +1,64 @@
+package com.cognizant.healthcare.controller;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.cognizant.healthcare.service.PatientService;
+
+@RestController
+@RequestMapping("/patients")
+public class PatientController {
+
+    @Autowired
+    private PatientService patientService;
+  
+    // Create a new patient
+    @PostMapping
+    public ResponseEntity<Patient> createPatient(@RequestBody Patient patient) {
+        Patient createdPatient = patientService.createPatient(patient);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdPatient);
+    }
+
+    // Get a patient by ID
+    @GetMapping("/{id}")
+    public ResponseEntity<Patient> getPatientById(@PathVariable Long id) {
+        return patientService.getPatientById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    // Update patient details
+    @PutMapping("/{id}")
+    public ResponseEntity<Patient> updatePatient(@PathVariable Long id, @RequestBody Patient patient) {
+        return patientService.updatePatient(id, patient)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    // Delete a patient by ID
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePatient(@PathVariable Long id) {
+        patientService.deletePatient(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    // Book an appointment
+    @PostMapping("/{patientId}/appointments")
+    public ResponseEntity<Appointment> bookAppointment(
+            @PathVariable Long patientId,
+            @RequestParam Long doctorId,
+            @RequestParam String timeslot) {
+        Appointment appointment = patientService.bookAppointment(patientId, doctorId, timeslot);
+        return ResponseEntity.status(HttpStatus.CREATED).body(appointment);
+    }
+
+    // View consultation history
+    @GetMapping("/{patientId}/consultations")
+    public ResponseEntity<List<Consultation>> getConsultationHistory(@PathVariable Long patientId) {
+        List<Consultation> consultations = patientService.getConsultationHistory(patientId);
+        return ResponseEntity.ok(consultations);
+    }
+}

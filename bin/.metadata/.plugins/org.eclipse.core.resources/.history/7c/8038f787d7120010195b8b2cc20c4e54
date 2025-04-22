@@ -1,0 +1,12 @@
+package com.cognizant.healthcare.DTO;
+
+
+public class ConsultationDTO {
+    private Long consultationID;
+    private AppointmentDTO appointment;
+    private String notes; // Consultation notes
+    private String prescription; // Prescribed medications
+
+    // Getters and setters
+}
+

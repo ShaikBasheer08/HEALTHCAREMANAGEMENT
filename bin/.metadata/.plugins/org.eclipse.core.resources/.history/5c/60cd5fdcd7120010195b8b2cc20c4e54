@@ -1,0 +1,25 @@
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.cognizant.healthcare.entity.Appointment;
+
+import java.util.List;
+
+@Repository
+public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
+
+    // Custom query to find appointments by Patient ID
+    List<Appointment> findByPatient_PatientID(Long patientId);
+
+    // Custom query to find appointments by Doctor ID
+    List<Appointment> findByDoctor_DoctorID(Long doctorId);
+
+    // Custom query to find appointments by status (e.g., "Booked", "Completed", "Cancelled")
+    List<Appointment> findByStatus(String status);
+
+    // Custom query to find appointments by Doctor ID and timeslot
+    List<Appointment> findByDoctor_DoctorIDAndTimeslot(Long doctorId, String timeslot);
+
+    // Custom query to find appointments by Patient ID and timeslot
+    List<Appointment> findByPatient_PatientIDAndTimeslot(Long patientId, String timeslot);
+}

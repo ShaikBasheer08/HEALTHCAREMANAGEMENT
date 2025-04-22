@@ -32,7 +32,7 @@ public class DoctorController {
     public ResponseEntity<DoctorDTO> createDoctor(@Valid @RequestBody DoctorDTO doctorDTO) {
         DoctorDTO createdDoctor = doctorService.createDoctor(doctorDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdDoctor);
-    }
+        }
 
     // ✅ Get Doctor by ID
     @GetMapping("/{doctorID}")

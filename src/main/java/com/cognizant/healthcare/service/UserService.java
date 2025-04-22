@@ -76,7 +76,7 @@ public class UserService
     public String authenticateUser(AuthenticationRequestDTO request) {
         // Strictly handle login logic
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getName(), request.getPassword())
+                new UsernamePasswordAuthenticationToken(request.getName(), request.getPassword())//class
         );
  
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
