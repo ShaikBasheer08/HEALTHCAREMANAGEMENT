@@ -16,5 +16,6 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
 
 
+	boolean existsByPatientPatientID(Long patientID);
     
 }

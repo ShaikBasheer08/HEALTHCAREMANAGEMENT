@@ -142,6 +142,13 @@ public class PatientController {
         return ResponseEntity.ok(consultationDetailsDTO);
     }
 
+ 
+    @GetMapping("/{patientID}/notification")
+    @PreAuthorize("hasRole('PATIENT')")
+    public ResponseEntity<String> getNotificationById(@PathVariable Long patientID) {
+        String response = patientService.getNotificationById(patientID);
+        return ResponseEntity.ok(response);
+    }
 
 }
  

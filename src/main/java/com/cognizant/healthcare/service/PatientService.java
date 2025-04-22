@@ -184,4 +184,13 @@ public class PatientService {
         return modelMapper.map(consultation, ConsultationDetailsDTO.class);
     }
 
+    public String getNotificationById(Long patientID) {
+		if(appointmentRepository.existsByPatientPatientID(patientID))
+		{
+			return "Appointment Booked Successfully";
+		}
+		return "No Appointment Found !";
+		
+	}
+
 }
