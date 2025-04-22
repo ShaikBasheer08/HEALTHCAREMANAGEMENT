@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
     // Handle Duplicate Record Exception
     @ExceptionHandler(DuplicateRecordException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ErrorResponse handleDuplicateRecordException(DuplicateRecordException ex) {
+    public ErrorResponse handleDuplicateRecordException(DuplicateRecordException ex)  {
         return new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
     }
 
