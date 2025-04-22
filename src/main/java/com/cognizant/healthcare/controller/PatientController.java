@@ -1,10 +1,6 @@
 package com.cognizant.healthcare.controller;
 import java.time.LocalDate;
- 
- 
 import java.util.List;
- 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,11 +19,7 @@ import com.cognizant.healthcare.DTO.AppointmentDTO;
 import com.cognizant.healthcare.DTO.AppointmentResponseDTO;
 import com.cognizant.healthcare.DTO.ConsultationDTO;
 import com.cognizant.healthcare.DTO.ConsultationDetailsDTO;
-//import com.cognizant.healthcare.DTO.ConsultationDetailsDTO;
 import com.cognizant.healthcare.DTO.PatientDTO;
-//import com.cognizant.healthcare.entity.Consultation;
-//import com.cognizant.healthcare.exception.ResourceNotFoundException;
-import com.cognizant.healthcare.repository.ConsultationRepository;
 import com.cognizant.healthcare.service.PatientService;
  
 import jakarta.validation.Valid;

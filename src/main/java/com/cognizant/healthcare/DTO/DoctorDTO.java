@@ -14,7 +14,7 @@ public class DoctorDTO {
  
     private Long doctorID;
  
-  @NotNull(message = "User details must not be null")
+  @NotBlank(message = "User details must not be null")
     private UserDTO user; // Ensures associated user information is provided
  
   @NotBlank(message = "Qualification must not be blank")
