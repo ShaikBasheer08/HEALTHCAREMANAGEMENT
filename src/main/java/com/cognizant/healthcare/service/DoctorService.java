@@ -4,6 +4,7 @@ import com.cognizant.healthcare.DTO.AppointmentDTO;
 import com.cognizant.healthcare.DTO.AvailabilityDTO;
 import com.cognizant.healthcare.DTO.ConsultationDTO;
 import com.cognizant.healthcare.DTO.DoctorDTO;
+import com.cognizant.healthcare.DTO.DoctorInfoDTO;
 import com.cognizant.healthcare.entity.Appointment;
 import com.cognizant.healthcare.entity.Availability;
 import com.cognizant.healthcare.entity.Consultation;
@@ -181,4 +182,12 @@ public class DoctorService {
             throw new RuntimeException("Failed to delete consultation. Record still exists.");
         }
     }
+
+	public List<AvailabilityDTO> getDoctorAvailabilities() {
+		// TODO Auto-generated method stub
+		List<Availability> availabilities = availabilityRepository.findAll();
+        return availabilities.stream()
+                .map(availability ->modelMapper.map(availability, AvailabilityDTO.class))
+                .collect(Collectors.toList());
+	}
 }

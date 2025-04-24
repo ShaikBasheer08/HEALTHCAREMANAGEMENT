@@ -192,6 +192,15 @@ public class PatientService {
 		return "No Appointment Found !";
 		
 	}
-    
 
+    public List<DoctorInfoDTO> viewDoctorsList() {
+        List<Doctor> doctors = doctorRepository.findAll();
+        return doctors.stream()
+                .map(doctor -> {
+                    DoctorInfoDTO dto = modelMapper.map(doctor, DoctorInfoDTO.class);
+                    dto.setName(userRepository.findById(dto.getDoctorID()).get().getName()); // Setting the doctor's name
+                    return dto;
+                })
+                .collect(Collectors.toList());
+    }
 }

@@ -17,9 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
  
 import com.cognizant.healthcare.DTO.AppointmentDTO;
 import com.cognizant.healthcare.DTO.AppointmentResponseDTO;
+import com.cognizant.healthcare.DTO.AvailabilityDTO;
 import com.cognizant.healthcare.DTO.ConsultationDTO;
 import com.cognizant.healthcare.DTO.ConsultationDetailsDTO;
+import com.cognizant.healthcare.DTO.DoctorInfoDTO;
 import com.cognizant.healthcare.DTO.PatientDTO;
+import com.cognizant.healthcare.service.DoctorService;
 import com.cognizant.healthcare.service.PatientService;
  
 import jakarta.validation.Valid;
@@ -33,7 +36,8 @@ public class PatientController {
  
     @Autowired
     private PatientService patientService;
-   
+    @Autowired
+    private DoctorService doctorService;
 // Create a new patient
  
     @PostMapping("/add")
@@ -148,6 +152,20 @@ public class PatientController {
     public ResponseEntity<String> getNotificationById(@PathVariable Long patientID) {
         String response = patientService.getNotificationById(patientID);
         return ResponseEntity.ok(response);
+    }
+    
+    @GetMapping("/viewDoctorsList")
+    @PreAuthorize("hasRole('PATIENT')")
+    public ResponseEntity<List<DoctorInfoDTO>> viewDoctorsList() {
+    	List<DoctorInfoDTO> response = patientService.viewDoctorsList();
+        return ResponseEntity.ok(response);
+    }
+    
+    @GetMapping("/availabilities")
+    @PreAuthorize("hasRole('PATIENT')")
+    public ResponseEntity<List<AvailabilityDTO>> getDoctorAvailability() {
+        List<AvailabilityDTO> availabilityList = doctorService.getDoctorAvailabilities();
+        return ResponseEntity.ok(availabilityList);
     }
 
 }
